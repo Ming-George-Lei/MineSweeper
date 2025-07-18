@@ -46,7 +46,7 @@
         256,
         384
       ],
-      "path": "/MineSweeper/_next/image",
+      "path": "/MineSweeper/_next/image/",
       "loader": "default",
       "loaderFile": "",
       "domains": [],
@@ -73,7 +73,7 @@
     },
     "basePath": "/MineSweeper",
     "sassOptions": {},
-    "trailingSlash": false,
+    "trailingSlash": true,
     "i18n": null,
     "productionBrowserSourceMaps": false,
     "excludeDefaultMomentLocales": true,

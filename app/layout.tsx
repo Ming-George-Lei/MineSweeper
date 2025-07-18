@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Minesweeper Game',
   description: 'A classic Minesweeper game built with Next.js and Tailwind CSS',
   icons: {
-    icon: '/Bomb_icon.png',
+    icon: process.env.NODE_ENV === 'production' ? '/MineSweeper/Bomb_icon.png' : '/Bomb_icon.png',
   },
 }
 
