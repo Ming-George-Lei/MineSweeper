@@ -2,8 +2,16 @@
   "version": 3,
   "pages404": true,
   "caseSensitive": false,
-  "basePath": "",
+  "basePath": "/MineSweeper",
   "redirects": [
+    {
+      "source": "/MineSweeper/",
+      "destination": "/MineSweeper",
+      "basePath": false,
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^/MineSweeper/$"
+    },
     {
       "source": "/:path+/",
       "destination": "/:path+",
