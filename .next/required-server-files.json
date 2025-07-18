@@ -59,7 +59,7 @@
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
       "contentDispositionType": "attachment",
       "remotePatterns": [],
-      "unoptimized": false
+      "unoptimized": true
     },
     "devIndicators": {
       "position": "bottom-left"
@@ -89,6 +89,7 @@
     "compiler": {},
     "expireTime": 31536000,
     "staticPageGenerationTimeout": 60,
+    "output": "export",
     "modularizeImports": {
       "@mui/icons-material": {
         "transform": "@mui/icons-material/{{member}}"
@@ -97,7 +98,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/minglei/Documents/git/little-game",
+    "outputFileTracingRoot": "/Users/minglei/Documents/git/MineSweeper",
     "experimental": {
       "useSkewCookie": false,
       "nodeMiddleware": false,
@@ -287,10 +288,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.js",
     "turbopack": {
-      "root": "/Users/minglei/Documents/git/little-game"
+      "root": "/Users/minglei/Documents/git/MineSweeper"
     }
   },
-  "appDir": "/Users/minglei/Documents/git/little-game",
+  "appDir": "/Users/minglei/Documents/git/MineSweeper",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",

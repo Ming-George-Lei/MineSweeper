@@ -1,4 +1,4 @@
-// File: /Users/minglei/Documents/git/little-game/app/layout.tsx
+// File: /Users/minglei/Documents/git/MineSweeper/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
