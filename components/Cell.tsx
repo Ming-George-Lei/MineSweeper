@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import type { Cell as CellType } from '@/lib/types';
 import { Button } from '@mui/material';
 
@@ -10,6 +10,9 @@ interface CellProps {
 }
 
 const Cell: React.FC<CellProps> = ({ cell, onLeftClick, onRightClick, gameStatus }) => {
+  const touchTimeout = useRef<NodeJS.Timeout | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
   const handleClick = () => {
     if (gameStatus === 'playing' && !cell.isRevealed && !cell.isFlagged) {
       onLeftClick(cell.row, cell.col);
@@ -22,6 +25,60 @@ const Cell: React.FC<CellProps> = ({ cell, onLeftClick, onRightClick, gameStatus
       onRightClick(cell.row, cell.col);
     }
   };
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (gameStatus !== 'playing') return;
+    
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    
+    // Set up long press timer for right-click (flag/unflag)
+    touchTimeout.current = setTimeout(() => {
+      onRightClick(cell.row, cell.col);
+    }, 500); // 500ms for long press
+  }, [gameStatus, cell.row, cell.col, onRightClick]);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchTimeout.current) {
+      clearTimeout(touchTimeout.current);
+      touchTimeout.current = null;
+    }
+    
+    if (gameStatus !== 'playing') return;
+    
+    // Check if this was a tap (not a long press)
+    const touch = e.changedTouches[0];
+    if (touchStartRef.current) {
+      const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
+      const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+      
+      // If it's a short tap and not much movement, treat as left click
+      if (deltaX < 10 && deltaY < 10) {
+        if (!cell.isRevealed && !cell.isFlagged) {
+          onLeftClick(cell.row, cell.col);
+        }
+      }
+    }
+    
+    touchStartRef.current = null;
+  }, [gameStatus, cell.row, cell.col, cell.isRevealed, cell.isFlagged, onLeftClick]);
+
+  const handleTouchMove = useCallback(() => {
+    // Cancel long press if user moves finger
+    if (touchTimeout.current) {
+      clearTimeout(touchTimeout.current);
+      touchTimeout.current = null;
+    }
+  }, []);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (touchTimeout.current) {
+        clearTimeout(touchTimeout.current);
+      }
+    };
+  }, []);
 
   const getCellContent = () => {
     if (cell.isFlagged) return '🚩';
@@ -92,6 +149,9 @@ const Cell: React.FC<CellProps> = ({ cell, onLeftClick, onRightClick, gameStatus
       sx={getCellSx()}
       onClick={handleClick}
       onContextMenu={handleRightClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchMove}
       disabled={gameStatus !== 'playing'}
     >
       {getCellContent()}

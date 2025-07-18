@@ -166,6 +166,14 @@ const Minesweeper: React.FC = () => {
               <span className="font-medium">Remaining:</span> {gameState.mineCount - gameState.flagCount}
             </span>
           </div>
+          <div className="mt-3 text-sm text-gray-500">
+            <div className="block md:hidden">
+              📱 Mobile: Tap to reveal • Long press to flag 🚩
+            </div>
+            <div className="hidden md:block">
+              🖱️ Desktop: Left click to reveal • Right click to flag 🚩
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-center">
